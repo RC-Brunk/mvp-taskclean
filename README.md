@@ -202,10 +202,10 @@ mvp-taskclean/
 
 ## 👤 Contato
 
-**[Seu Nome Completo]**
+**[Bruno Ferreira]**
 
-* GitHub: [https://github.com/SEU-USUARIO](https://github.com/SEU-USUARIO)
-* LinkedIn: [https://linkedin.com/in/SEU-PERFIL](https://linkedin.com/in/SEU-PERFIL)
+* GitHub: [https://github.com/RC-BrunK](https://github.com/SEU-USUARIO)
+* LinkedIn: [https://www.linkedin.com/in/bruno-ferreira-13067015b/](https://linkedin.com/in/SEU-PERFIL)
 
 ---
 
