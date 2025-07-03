@@ -205,7 +205,7 @@ mvp-taskclean/
 **Bruno Ferreira**
 
 * GitHub: [RC-BrunK](https://github.com/RC-Brunk)
-* LinkedIn: [Bruno Ferreira](linkedin.com/in/bruno-ferreira-13067015b)
+* LinkedIn: [Bruno Ferreira](https://linkedin.com/in/bruno-ferreira-13067015b)
 
 ---
 
