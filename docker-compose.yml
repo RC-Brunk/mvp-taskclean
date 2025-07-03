@@ -1,0 +1,48 @@
+# MVP-TaskClean/docker-compose.yml
+
+version: '3.8' # Versão da sintaxe do Docker Compose
+
+services:
+  # Serviço para o banco de dados PostgreSQL
+  db:
+    image: postgres:15-alpine # Imagem oficial do PostgreSQL. 'alpine' para ser leve.
+    container_name: mvp_taskclean_db_container # Nome do contêiner para fácil identificação
+    restart: always # Tenta reiniciar o contêiner se ele parar
+    environment: # Variáveis de ambiente para configurar o PostgreSQL. Serão lidas do .env principal.
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persiste os dados do banco em um volume para não perdê-los
+    ports:
+      - "5432:5432" # Mapeia a porta 5432 do host para a porta 5432 do contêiner.
+
+  # Serviço para o backend Node.js
+  backend:
+    build:
+      context: ./backend # Onde o Dockerfile do backend está localizado
+      dockerfile: Dockerfile
+    container_name: mvp_taskclean_backend_container
+    restart: always
+    ports:
+      - "3001:3001" # Mapeia a porta 3001 do host para a porta 3001 do contêiner.
+    environment: # Variáveis de ambiente para o backend (também lidas do .env principal)
+      PORT: ${PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      DB_HOST: db # ATENÇÃO: O host do DB é 'db', o nome do serviço do Docker Compose!
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+    depends_on: # Garante que o serviço 'db' inicie antes do 'backend'
+      - db
+    volumes:
+      - ./backend:/app # Mapeia o código-fonte local para dentro do contêiner.
+      - /app/node_modules # Exclui a pasta node_modules dentro do contêiner do mapeamento.
+
+# Volumes para persistir os dados do banco de dados
+volumes:
+  db_data:

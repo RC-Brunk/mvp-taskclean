@@ -1,0 +1,24 @@
+# Arquivos de ambiente - NUNCA ENVIE ISSO PARA O GITHUB
+.env
+.env.*
+!.env.example
+
+# Dependências - A pasta mais importante a ser ignorada
+node_modules/
+
+# Logs e arquivos de sistema
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Pasta de build do frontend (quando tivermos)
+frontend-web/build
+frontend-web/dist
+
+# Pasta de build do mobile (quando tivermos)
+mobile-app/dist
+mobile-app/.expo/
+
+# Arquivos de configuração do editor
+.vscode/
