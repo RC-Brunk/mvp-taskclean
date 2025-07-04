@@ -44,12 +44,19 @@ Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das
 - [x] Validação da conexão entre o backend e o banco de dados.
 - [x] Configuração do Git, `.gitignore` e versionamento inicial no GitHub.
 
-### ⏳ Backend - API (Em Andamento)
-- [ ] **Autenticação:** Implementação das rotas de registro (`/register`) e login (`/login`) com JWT.
+### ✅ Backend - API (Em Andamento)
+- [x] **Autenticação:** Implementação completa das rotas de registro (`/register`) e login (`/login`) com JWT e hash de senhas.
+- [x] **Middleware de Segurança:** Criação de um middleware para proteger rotas e validar o token JWT.
 - [ ] **Gerenciamento de Unidades:** CRUD completo para quartos/propriedades.
+    - [x] Modelo `Unit` e rotas do CRUD definidos.
+    - [x] Middleware de autenticação aplicado com sucesso às rotas.
+    - [x] Lógica de **Criação** (`createUnit`) implementada.
+    - [ ] Lógica de **Leitura** (`getAllUnits`, `getUnitById`).
+    - [ ] Lógica de **Atualização** (`updateUnit`).
+    - [ ] Lógica de **Deleção** (`deleteUnit`).
 - [ ] **Gerenciamento de Faxineiras:** CRUD completo para os usuários faxineiras.
-- [ ] **Gerenciamento de Tarefas:** CRUD completo para as tarefas de limpeza, incluindo a lógica de checklists.
-- [ ] **Upload de Fotos:** Endpoint para receber a foto de comprovação e salvar no AWS S3.
+- [ ] **Gerenciamento de Tarefas:** CRUD completo para as tarefas de limpeza.
+- [ ] **Upload de Fotos:** Endpoint para receber a foto de comprovação.
 
 ### 📝 Frontend - Painel Web (A Fazer)
 - [ ] Estrutura inicial do projeto React.
