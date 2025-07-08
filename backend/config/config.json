@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",          
+    "password": "T0xR1zbUcnPRUsehetT!", 
+    "database": "taskclean_db",   
+    "host": "localhost",                     
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "T0xR1zbUcnPRUsehetT!",
+    "database": "taskclean_test_db",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "T0xR1zbUcnPRUsehetT!",
+    "database": "taskclean_prod_db",
+    "host": "db",
+    "dialect": "postgres"
+  }
+}
