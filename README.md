@@ -44,23 +44,53 @@ Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das
 - [x] Validação da conexão entre o backend e o banco de dados.
 - [x] Configuração do Git, `.gitignore` e versionamento inicial no GitHub.
 
-### ✅ Backend - API (Progresso Atual)
-- [x] **Autenticação:** Implementação completa das rotas de registro (`/register`) e login (`/login`) com JWT e hash de senhas.
-- [x] **Middleware de Segurança:** Criação de um middleware para proteger rotas e validar o token JWT.
-- [x] **Gerenciamento de Unidades:** CRUD completo para quartos/propriedades.
-    - [x] Modelo `Unit` e rotas do CRUD definidos.
-    - [x] Middleware de autenticação aplicado com sucesso às rotas.
-    - [x] Lógica de **Criação** (`createUnit`) implementada.
-    - [x] Lógica de **Leitura** (`getAllUnits`, `getUnitById`) implementada.
-    - [x] Lógica de **Atualização** (`updateUnit`) implementada.
-    - [x] Lógica de **Deleção** (`deleteUnit`) implementada.
-- [x] **Middleware de Segurança:** Criação e aplicação de middlewares para autenticação (JWT) и autorização (papéis/roles).
-- [ ] **Gerenciamento de Faxineiras:** CRUD completo para os usuários do tipo "cleaner".
-    - [x] Lógica de **Leitura** (`getAllCleaners`) implementada e protegida por papel.
-    - [ ] Lógica de Criação (já coberta pela rota `/register`).
-    - [ ] Lógica de Leitura por ID, Atualização e Deleção.
-- [ ] **Gerenciamento de Tarefas:** CRUD completo para as tarefas de limpeza.
-- [ ] **Upload de Fotos:** Endpoint para receber a foto de comprovação.
+### 🚀 Backend - API
+
+Esta seção detalha o progresso atual e os próximos passos para o desenvolvimento da nossa API RESTful.
+
+---
+
+#### ✅ **Fase 1: Fundação e Segurança (Concluído)**
+
+- **[x] Configuração do Servidor:** Inicialização do servidor Express com middlewares essenciais (`cors`, `express.json`).
+- **[x] Conexão com Banco de Dados:** Estabelecimento de uma conexão robusta com o PostgreSQL.
+- **[x] Gestão de Schema com Migrations:**
+    - [x] Remoção do `sequelize.sync()` para evitar instabilidade.
+    - [x] Implementação do `sequelize-cli` para um controle de versão profissional do banco de dados.
+    - [x] Criação das migrações iniciais para as tabelas `Users` e `Units`.
+- **[x] Autenticação de Usuários:**
+    - [x] Rota `POST /api/auth/register` para criar novos usuários com senhas criptografadas (bcryptjs).
+    - [x] Rota `POST /api/auth/login` para autenticar usuários e gerar um JSON Web Token (JWT).
+- **[x] Autorização Baseada em Papéis:**
+    - [x] Criação do `authMiddleware` para proteger rotas contra acesso não autenticado.
+    - [x] Criação do `checkRoleMiddleware` para restringir o acesso a funcionalidades com base no papel do usuário (`manager` vs. `cleaner`).
+
+---
+
+#### ✅ **Fase 2: Módulos Principais (CRUDs)**
+
+- **[x] Módulo de Unidades (Concluído):**
+    - [x] Implementação do CRUD completo (Create, Read, Update, Delete) para gerenciar as unidades (quartos/propriedades).
+    - [x] Rotas protegidas para garantir que apenas usuários autenticados (e `managers` para ações específicas) possam interagir com as unidades.
+- **[ ] Módulo de Faxineiras (Em Andamento):**
+    - [x] Rota `GET /api/cleaners` para listar todos os usuários com o papel `cleaner`.
+    - [ ] **A Fazer:** Implementar rotas para buscar uma faxineira por ID, atualizar seus dados (se necessário) e deletá-la.
+- **[ ] Módulo de Tarefas (A Fazer):**
+    - [ ] **A Fazer:** Criar o modelo `Task` e definir suas **associações** (relações) com os modelos `User` e `Unit`.
+    - [ ] **A Fazer:** Criar a migração para a nova tabela `Tasks`.
+    - [ ] **A Fazer:** Implementar o CRUD completo para Tarefas, permitindo que um `manager` crie e atribua uma tarefa de limpeza a um `cleaner` para uma `unit` específica.
+
+---
+
+#### 📝 **Fase 3: Funcionalidades Avançadas (Futuro)**
+
+- **[ ] Upload de Fotos:**
+    - [ ] **A Fazer:** Implementar a lógica com `multer` para receber o upload da foto de comprovação.
+    - [ ] **A Fazer:** Integrar com o `aws-sdk` para salvar a imagem no nosso bucket S3.
+- **[ ] Notificações:**
+    - [ ] **A Fazer:** Pesquisar e implementar um sistema de notificações (ex: WebSockets ou serviço de push) para avisar os `cleaners` sobre novas tarefas.
+- **[ ] Testes Automatizados:**
+    - [ ] **A Fazer:** Configurar um ambiente de testes (ex: com Jest e Supertest) para criar testes unitários e de integração para nossa API.
 
 ### 📝 Frontend - Painel Web (A Fazer)
 - [ ] Estrutura inicial do projeto React.
