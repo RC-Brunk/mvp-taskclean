@@ -1,58 +1,54 @@
 // backend/server.js
 
-require('dotenv').config(); // Carrega variáveis de ambiente do .env
-
+// --- 1. Importações dos Módulos ---
+require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
 const express = require('express');
-const cors = require('cors'); // Middleware para permitir requisições de diferentes origens
-const sequelize = require('./config/database'); // Importa a configuração do banco de dados
+const cors = require('cors');
+const sequelize = require('./config/database'); // Nossa instância configurada do Sequelize
 
-// Importa os modelos (necessário para o Sequelize reconhecê-los para as Migrações ou outras operações)
-const User = require('./models/User'); 
-const Unit = require('./models/Unit'); // Seu modelo Unit já importado
+// --- Importação dos Modelos ---
+// (É uma boa prática importar os modelos no arquivo principal para que o Sequelize os reconheça, se necessário em outras partes)
+require('./models/User');
+require('./models/Unit');
 
-// Importa as rotas (que você já adiantou a criação)
+// --- Importação das Rotas ---
 const authRoutes = require('./routes/authRoutes');
 const unitRoutes = require('./routes/unitRoutes');
 
+
+// --- 2. Configuração do Express ---
 const app = express();
-const PORT = process.env.PORT || 3001; // Define a porta do servidor UMA ÚNICA VEZ
 
-// Middlewares básicos
-app.use(cors()); // Habilita CORS para que o frontend possa se comunicar
-app.use(express.json()); // Habilita o Express a ler JSON no corpo das requisições
+// Middlewares essenciais
+app.use(cors()); // Habilita CORS para permitir que nosso frontend acesse a API
+app.use(express.json()); // Habilita o Express para entender o corpo de requisições em formato JSON
 
-// Rota de teste para verificar se a API está no ar
+
+// --- 3. Definição das Rotas da API ---
+// Rota "Health Check" para verificar se a API está no ar
 app.get('/api/health-check', (req, res) => {
-  res.status(200).json({
-    status: 'ok',
-    message: 'API do TaskClean está funcionando!',
-    timestamp: new Date().toISOString()
-  });
+    res.status(200).json({ status: 'ok', message: 'API do TaskClean está funcionando!' });
 });
 
-// Usar as rotas de autenticação com o prefixo /api/auth
-app.use('/api/auth', authRoutes);
+// Registra as rotas da aplicação
+app.use('/api/auth', authRoutes); // Rotas de Autenticação
+app.use('/api/units', unitRoutes); // Rotas de Unidades
 
-// Usar as rotas de unidades com o prefixo /api/units
-app.use('/api/units', unitRoutes);
 
-// Rota de teste simples para verificar se o servidor está funcionando
-app.get('/', (req, res) => {
-    res.send('Backend do MVP-TaskClean Online e Rodando!');
-});
+// --- 4. Conexão com o Banco de Dados e Inicialização do Servidor ---
+const PORT = process.env.PORT || 3001;
 
-// Conecta ao banco de dados e INICIA O SERVIDOR
-sequelize.authenticate() // Tenta autenticar a conexão com o banco de dados
+console.log('Tentando conectar ao banco de dados...');
+sequelize.authenticate()
     .then(() => {
         console.log('Conexão com o banco de dados estabelecida com sucesso.');
-        // A sincronização do esquema do banco de dados será feita AGORA pelas Migrações.
         
-        // Inicia o servidor Express somente após a conexão bem-sucedida com o DB
+        // Inicia o servidor Express APENAS se a conexão com o banco for bem-sucedida
         app.listen(PORT, () => {
             console.log(`Servidor rodando na porta ${PORT}`);
         });
     })
     .catch(err => {
-        console.error('Erro ao conectar ao banco de dados:', err);
-        process.exit(1); // Sai do processo se houver erro crítico na conexão
+        console.error('Não foi possível conectar ao banco de dados:', err);
+        process.exit(1); // Encerra o processo se não conseguir conectar ao DB
     });

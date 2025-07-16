@@ -93,9 +93,31 @@ const updateUnit = async (req, res) => {
     }
 };
 
-// --- DELETAR (Placeholder) ---
-const deleteUnit = (req, res) => {
-    res.status(200).json({ message: `Controller: Unidade com ID ${req.params.id} deletada (placeholder)!` });
+// --- DELETAR (Delete) ---
+const deleteUnit = async (req, res) => {
+    try {
+        // Pega o ID da unidade que queremos deletar a partir da URL
+        const { id } = req.params;
+
+        // 1. Encontra a unidade no banco para garantir que ela existe
+        const unit = await Unit.findByPk(id);
+
+        // 2. Se não for encontrada, retorna um erro 404
+        if (!unit) {
+            return res.status(404).json({ message: 'Unidade não encontrada.' });
+        }
+
+        // 3. Se a unidade existe, deleta ela do banco de dados
+        await unit.destroy();
+
+        // 4. Envia uma resposta de sucesso, sem conteúdo.
+        // O status 204 No Content é o padrão REST para operações de delete bem-sucedidas.
+        res.status(204).send();
+
+    } catch (error) {
+        console.error('Erro ao deletar unidade:', error);
+        res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
+    }
 };
 
 
