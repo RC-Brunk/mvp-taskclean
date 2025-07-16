@@ -45,11 +45,7 @@ Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das
 - [x] Configuração do Git, `.gitignore` e versionamento inicial no GitHub.
 
 ### 🚀 Backend - API
-
-Esta seção detalha o progresso atual e os próximos passos para o desenvolvimento da nossa API RESTful.
-
 ---
-
 #### ✅ **Fase 1: Fundação e Segurança (Concluído)**
 
 - **[x] Configuração do Servidor:** Inicialização do servidor Express com middlewares essenciais (`cors`, `express.json`).
