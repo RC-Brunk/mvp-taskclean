@@ -5,6 +5,7 @@ require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database'); // Nossa instância configurada do Sequelize
+const cleanerRoutes = require('./routes/cleanerRoutes');
 
 // --- Importação dos Modelos ---
 // (É uma boa prática importar os modelos no arquivo principal para que o Sequelize os reconheça, se necessário em outras partes)
@@ -33,6 +34,7 @@ app.get('/api/health-check', (req, res) => {
 // Registra as rotas da aplicação
 app.use('/api/auth', authRoutes); // Rotas de Autenticação
 app.use('/api/units', unitRoutes); // Rotas de Unidades
+app.use('/api/cleaners', cleanerRoutes); //Usar as rotas de faxineiras com o prefixo /api/cleaners
 
 
 // --- 4. Conexão com o Banco de Dados e Inicialização do Servidor ---

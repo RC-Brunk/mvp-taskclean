@@ -54,7 +54,11 @@ Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das
     - [x] Lógica de **Leitura** (`getAllUnits`, `getUnitById`) implementada.
     - [x] Lógica de **Atualização** (`updateUnit`) implementada.
     - [x] Lógica de **Deleção** (`deleteUnit`) implementada.
+- [x] **Middleware de Segurança:** Criação e aplicação de middlewares para autenticação (JWT) и autorização (papéis/roles).
 - [ ] **Gerenciamento de Faxineiras:** CRUD completo para os usuários do tipo "cleaner".
+    - [x] Lógica de **Leitura** (`getAllCleaners`) implementada e protegida por papel.
+    - [ ] Lógica de Criação (já coberta pela rota `/register`).
+    - [ ] Lógica de Leitura por ID, Atualização e Deleção.
 - [ ] **Gerenciamento de Tarefas:** CRUD completo para as tarefas de limpeza.
 - [ ] **Upload de Fotos:** Endpoint para receber a foto de comprovação.
 
