@@ -1,38 +1,44 @@
 // backend/models/User.js
 
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Caminho para o seu arquivo de conexão database.js
-const bcrypt = require('bcryptjs'); // Para hash de senhas
+const sequelize = require('../config/database');
+const bcrypt = require('bcryptjs');
 
 const User = sequelize.define('User', {
+    // Definição das colunas
     id: {
-        type: DataTypes.UUID, // Tipo UUID para IDs únicos globais
-        defaultValue: DataTypes.UUIDV4, // Gera UUIDs automaticamente
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    email: {
+    fullName: {
         type: DataTypes.STRING,
-        unique: true, // Garante que o email seja único
-        allowNull: false, // Não permite valores nulos
+        allowNull: false,
+    },
+    username: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    role: { // Define o papel do usuário: 'manager' (gerente) ou 'cleaner' (diarista)
+    role: {
         type: DataTypes.ENUM('manager', 'cleaner'),
         allowNull: false,
-        defaultValue: 'cleaner' // Define um valor padrão, pode ser alterado no cadastro
+        defaultValue: 'cleaner'
     }
 }, {
-    timestamps: true // Adiciona automaticamente as colunas 'createdAt' e 'updatedAt'
-});
-
-// Hook (gancho) do Sequelize para fazer o hash da senha antes de salvar um novo usuário
-// Isso é crucial para a segurança!
-User.beforeCreate(async (user) => {
-    if (user.password) { // Apenas faz o hash se a senha existir
-        user.password = await bcrypt.hash(user.password, 10); // '10' é o saltRounds, complexidade do hash
+    // Objeto de opções do Sequelize
+    timestamps: true, // Habilita as colunas createdAt e updatedAt
+    hooks: {
+        // Hook (gancho) para fazer o hash da senha antes de criar um novo usuário
+        beforeCreate: async (user) => {
+            if (user.password) {
+                user.password = await bcrypt.hash(user.password, 10); // '10' é o saltRounds
+            }
+        }
     }
 });
 

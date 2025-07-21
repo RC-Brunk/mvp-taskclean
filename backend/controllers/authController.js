@@ -1,86 +1,78 @@
 // backend/controllers/authController.js
 
 const User = require('../models/User');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-// Função para registrar um novo usuário
-// Função para registrar um novo usuário - VERSÃO FINAL
+// -- REGISTRO (Atualizado para usar username e fullName) --
 const register = async (req, res) => {
-    // Passo 1: Extrair 'email' e 'password' do corpo da requisição
-    const { email, password, role } = req.body;
+    // Passo 1: Extrair dados do corpo da requisição
+    const { fullName, username, password, role } = req.body;
 
-    // Passo 2: Validar se os dados essenciais foram enviados
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
+    // Passo 2: Validação dos dados de entrada
+    if (!fullName || !username || !password) {
+        return res.status(400).json({ message: 'Nome completo, nome de usuário e senha são obrigatórios.' });
     }
 
     try {
-        // Passo 3: Verificar se um usuário com este email já existe no banco
-        const existingUser = await User.findOne({ where: { email: email } });
+        // Passo 3: Verificar se o nome de usuário já existe
+        const existingUser = await User.findOne({ where: { username: username } });
 
         if (existingUser) {
-            // Se o usuário já existe, retorna um erro do tipo "Conflito"
-            return res.status(409).json({ message: 'Este email já está em uso.' });
+            return res.status(409).json({ message: 'Este nome de usuário já está em uso.' });
         }
 
-        // Passo 4: Se o email é novo, criar o usuário no banco de dados.
-        // Lembre-se: o 'hook' `beforeCreate` no modelo User.js irá automaticamente
-        // fazer o hash da senha antes de salvá-la. Não precisamos fazer isso aqui.
+        // Passo 4: Criar o novo usuário no banco
+        // O hook 'beforeCreate' no modelo User.js fará o hash da senha automaticamente
         const newUser = await User.create({
-            email,
+            fullName,
+            username,
             password,
-            role: role || 'cleaner' // Se uma 'role' não for enviada, o padrão será 'cleaner'
+            role: role || 'cleaner'
         });
 
-        // Passo 5: Enviar uma resposta de sucesso.
-        // É uma boa prática não enviar o objeto do usuário inteiro de volta (especialmente a senha hasheada).
+        // Passo 5: Enviar uma resposta de sucesso
         res.status(201).json({
             message: 'Usuário registrado com sucesso!',
-            userId: newUser.id // Enviar o ID do novo usuário é uma boa confirmação.
+            userId: newUser.id
         });
 
     } catch (error) {
-        // Passo 6: Se algo inesperado acontecer (ex: falha de conexão com o DB),
-        // capturar o erro e enviar uma resposta de erro genérica.
         console.error('Erro no registro do usuário:', error);
-        res.status(500).json({ message: 'Ocorreu um erro no servidor. Tente novamente mais tarde.' });
+        res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
     }
 };
 
-// Função para fazer login de um usuário
-// Função para fazer login de um usuário - VERSÃO FINAL
+// -- LOGIN (Atualizado para usar username) --
 const login = async (req, res) => {
-    // Passo 1: Extrair email e senha
-    const { email, password } = req.body;
+    // Passo 1: Extrair username e senha
+    const { username, password } = req.body;
 
     // Passo 2: Validar a entrada
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email e senha são obrigatórios.' });
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Nome de usuário e senha são obrigatórios.' });
     }
 
     try {
-        // Passo 3: Encontrar o usuário no banco pelo email
-        const user = await User.findOne({ where: { email: email } });
+        // Passo 3: Encontrar o usuário no banco pelo username
+        const user = await User.findOne({ where: { username: username } });
 
         // Passo 4: Verificar se o usuário existe E se a senha corresponde
-        // Usamos bcrypt.compare para comparar a senha enviada com a senha hasheada no banco
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            // Se o usuário não existe OU a senha não bate, enviamos um erro genérico.
-            // É uma boa prática de segurança não dizer se foi o email ou a senha que errou.
-            return res.status(401).json({ message: 'Credenciais inválidas.' }); // 401 Unauthorized
+            return res.status(401).json({ message: 'Credenciais inválidas.' });
         }
 
-        // Passo 5: Se tudo estiver correto, gerar o Token JWT
+        // Passo 5: Gerar o Token JWT
         const payload = {
             id: user.id,
-            role: user.role
+            role: user.role,
+            fullName: user.fullName // Adicionando o nome completo ao token
         };
 
         const token = jwt.sign(
             payload,
-            process.env.JWT_SECRET, // Nossa chave secreta do arquivo .env
-            { expiresIn: '24h' }    // Define um tempo de expiração para o token
+            process.env.JWT_SECRET,
+            { expiresIn: '24h' }
         );
 
         // Passo 6: Enviar a resposta de sucesso com o token
@@ -95,7 +87,7 @@ const login = async (req, res) => {
     }
 };
 
-// Exporta as funções para que as rotas possam usá-las
+
 module.exports = {
     register,
     login,

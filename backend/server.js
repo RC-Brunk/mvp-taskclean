@@ -6,11 +6,21 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database'); // Nossa instância configurada do Sequelize
 const cleanerRoutes = require('./routes/cleanerRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 // --- Importação dos Modelos ---
 // (É uma boa prática importar os modelos no arquivo principal para que o Sequelize os reconheça, se necessário em outras partes)
 require('./models/User');
 require('./models/Unit');
+
+// ...
+require('./models/User');
+require('./models/Unit');
+require('./models/Task'); // Certifique-se de que o Task está importado
+
+// Executa o arquivo que define as associações
+require('./config/associations');
+// ...
 
 // --- Importação das Rotas ---
 const authRoutes = require('./routes/authRoutes');
@@ -35,6 +45,7 @@ app.get('/api/health-check', (req, res) => {
 app.use('/api/auth', authRoutes); // Rotas de Autenticação
 app.use('/api/units', unitRoutes); // Rotas de Unidades
 app.use('/api/cleaners', cleanerRoutes); //Usar as rotas de faxineiras com o prefixo /api/cleaners
+app.use('/api/tasks', taskRoutes);// Usar as rotas de tarefas com o prefixo /api/tasks
 
 
 // --- 4. Conexão com o Banco de Dados e Inicialização do Servidor ---

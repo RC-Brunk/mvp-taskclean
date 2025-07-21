@@ -45,23 +45,48 @@ Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das
 - [x] Configuração do Git, `.gitignore` e versionamento inicial no GitHub.
 
 ### 🚀 Backend - API
----
-#### ✅ **Fase 1: Fundação e Segurança (Concluído)**
 
-- **[x] Configuração do Servidor:** Inicialização do servidor Express com middlewares essenciais (`cors`, `express.json`).
-- **[x] Conexão com Banco de Dados:** Estabelecimento de uma conexão robusta com o PostgreSQL.
-- **[x] Gestão de Schema com Migrations:**
-    - [x] Remoção do `sequelize.sync()` para evitar instabilidade.
-    - [x] Implementação do `sequelize-cli` para um controle de versão profissional do banco de dados.
-    - [x] Criação das migrações iniciais para as tabelas `Users` e `Units`.
-- **[x] Autenticação de Usuários:**
-    - [x] Rota `POST /api/auth/register` para criar novos usuários com senhas criptografadas (bcryptjs).
-    - [x] Rota `POST /api/auth/login` para autenticar usuários e gerar um JSON Web Token (JWT).
-- **[x] Autorização Baseada em Papéis:**
-    - [x] Criação do `authMiddleware` para proteger rotas contra acesso não autenticado.
-    - [x] Criação do `checkRoleMiddleware` para restringir o acesso a funcionalidades com base no papel do usuário (`manager` vs. `cleaner`).
+Nosso desenvolvimento backend está dividido em fases para garantir a entrega de valor de forma incremental e organizada.
 
 ---
+
+#### ✅ **Fase 1: Fundação e Autenticação (Concluído)**
+
+- [x] **Infraestrutura:** Ambiente 100% funcional com Docker, Node.js e PostgreSQL.
+- [x] **Gestão de Banco de Dados:** Sistema de Migrações com `sequelize-cli` implementado e funcional.
+- [x] **Segurança:** Middlewares de autenticação (JWT) e autorização (papéis/roles) criados e testados.
+- [x] **CRUD Base:** CRUD completo para `Unidades` implementado como prova de conceito da arquitetura.
+
+---
+
+#### ⏳ **Fase 2: Refatoração e Funcionalidades Core (Em Andamento)**
+
+- [ ] **Refatoração do Modelo `User`:**
+    - [ ] Alterar o campo `email` para `username` para o sistema de login.
+    - [ ] Adicionar o campo `fullName` para exibição de nomes.
+    - [ ] Atualizar a migração da tabela `Users`.
+    - [ ] Ajustar as rotas e controllers de `register` e `login` para usar `username`.
+- [ ] **Atualização do Modelo `Unit`:**
+    - [ ] Adicionar o status `blocked` ao campo de status da unidade.
+    - [ ] Atualizar a migração da tabela `Units`.
+- **[ ] Módulo de Tarefas (A Fazer):**
+    - [ ] **A Fazer:** Criar o modelo `Task` e definir suas **associações** com `User` e `Unit`.
+    - [ ] **A Fazer:** Criar a migração para a nova tabela `Tasks`.
+    - [ ] **A Fazer:** Implementar o CRUD de Tarefas, permitindo que um `manager` atribua uma tarefa a um `cleaner`.
+    - [ ] **A Fazer:** Implementar a lógica para registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
+- **[ ] Módulo de Checklists (A Fazer):**
+    - [ ] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
+    - [ ] **A Fazer:** Permitir que o `manager` anexe um template de checklist ao criar uma `Tarefa`.
+- **[ ] Módulo de Manutenção (MVP):**
+    - [ ] **A Fazer:** Implementar a lógica no `Task` para que um `cleaner` possa marcar a necessidade de manutenção e adicionar notas.
+
+---
+
+#### 📝 **Fase 3: Funcionalidades Avançadas (Futuro)**
+
+- **[ ] Upload de Fotos e Vídeos:** Implementar o upload de mídias para o S3 como comprovação da tarefa.
+- **[ ] Notificações:** Sistema de notificações para novas tarefas ou alertas de manutenção.
+- **[ ] Testes Automatizados:** Implementação de uma suíte de testes para a API.
 
 #### ✅ **Fase 2: Módulos Principais (CRUDs)**
 

@@ -4,6 +4,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Unit = sequelize.define('Unit', {
+    
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -19,13 +20,15 @@ const Unit = sequelize.define('Unit', {
         allowNull: true,
         comment: 'Descrição ou notas sobre a unidade.'
     },
+    // 2. Coluna 'status' com o novo valor 'blocked' adicionado ao ENUM
     status: {
-        type: DataTypes.ENUM('clean', 'dirty', 'in_progress'),
-        allowNull: false,
+        type: DataTypes.ENUM('clean', 'dirty', 'in_progress', 'blocked'),
         defaultValue: 'dirty',
+        allowNull: false,
         comment: 'Status atual da limpeza da unidade.'
     }
 }, {
+    
     timestamps: true
 });
 

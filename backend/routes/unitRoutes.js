@@ -1,9 +1,9 @@
 // backend/routes/unitRoutes.js
 const express = require('express');
 const router = express.Router();
-const unitController = require('../controllers/unitController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const checkRole = require('../middlewares/checkRoleMiddleware');
+const unitController = require('../controllers/unitController.js');
+const authMiddleware = require('../middlewares/authMiddleware.js');
+const checkRole = require('../middlewares/checkRoleMiddleware.js');
 
 // Aplicamos o middleware de autenticação a todas as rotas de unidades.
 // Apenas usuários logados poderão acessar estas rotas.
