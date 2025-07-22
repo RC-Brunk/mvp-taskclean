@@ -69,10 +69,14 @@ Nosso desenvolvimento backend está dividido em fases para garantir a entrega de
 - [ ] **Atualização do Modelo `Unit`:**
     - [ ] Adicionar o status `blocked` ao campo de status da unidade.
     - [ ] Atualizar a migração da tabela `Units`.
-- **[ ] Módulo de Tarefas (A Fazer):**
-    - [ ] **A Fazer:** Criar o modelo `Task` e definir suas **associações** com `User` e `Unit`.
-    - [ ] **A Fazer:** Criar a migração para a nova tabela `Tasks`.
-    - [ ] **A Fazer:** Implementar o CRUD de Tarefas, permitindo que um `manager` atribua uma tarefa a um `cleaner`.
+- - [ ] **Módulo de Tarefas (Em Andamento):**
+    - [x] Criar o modelo `Task` e definir suas **associações** com `User` e `Unit`.
+    - [x] Criar a migração para a nova tabela `Tasks`.
+    - [ ] Implementar o CRUD de Tarefas, permitindo que um `manager` atribua uma tarefa a um `cleaner`.
+        - [x] Lógica de **Criação** (`createTask`) implementada.
+        - [x] Lógica de **Leitura** (`getAllTasks`, `getTaskById` com `include`) implementada.
+        - [ ] **A Fazer:** Lógica de **Atualização** (`updateTask`).
+        - [ ] **A Fazer:** Lógica de **Deleção** (`deleteTask`).
     - [ ] **A Fazer:** Implementar a lógica para registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
 - **[ ] Módulo de Checklists (A Fazer):**
     - [ ] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
