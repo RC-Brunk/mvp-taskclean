@@ -147,6 +147,8 @@ const finishTask = async (req, res) => {
     try {
         const { id: taskId } = req.params;
         const { id: cleanerId } = req.user;
+        // Pega os dados de manutenção do corpo da requisição (se existirem)
+        const { maintenance_required, maintenance_notes } = req.body;
 
         const task = await Task.findByPk(taskId);
 
@@ -154,7 +156,6 @@ const finishTask = async (req, res) => {
             return res.status(404).json({ message: 'Tarefa não encontrada.' });
         }
 
-        // Mesma verificação de segurança
         if (task.cleanerId !== cleanerId) {
             return res.status(403).json({ message: 'Acesso negado. Esta tarefa não foi atribuída a você.' });
         }
@@ -163,9 +164,18 @@ const finishTask = async (req, res) => {
             return res.status(409).json({ message: `Esta tarefa não pode ser finalizada pois seu status é '${task.status}'.`});
         }
 
-        // Atualiza o status e o timestamp de conclusão
-        task.status = 'pending_approval'; // Muda para "aguardando aprovação" do gerente
+        // Atualiza os campos principais
+        task.status = 'pending_approval';
         task.completedAt = new Date();
+
+        // Atualiza os campos de manutenção se eles foram enviados na requisição
+        if (maintenance_required !== undefined) {
+            task.maintenance_required = maintenance_required;
+        }
+        if (maintenance_notes) {
+            task.maintenance_notes = maintenance_notes;
+        }
+
         await task.save();
 
         res.status(200).json(task);

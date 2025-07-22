@@ -73,8 +73,8 @@ Esta seção detalha o progresso atual e os próximos passos para o desenvolvime
 - **[ ] Módulo de Checklists (A Fazer):**
     - [ ] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
     - [ ] **A Fazer:** Permitir que o `manager` anexe um template de checklist ao criar uma `Tarefa`.
-- **[ ] Módulo de Manutenção (MVP):**
-    - [ ] **A Fazer:** Implementar a lógica no `Task` para que um `cleaner` possa marcar a necessidade de manutenção e adicionar notas.
+- **[x] Módulo de Manutenção (MVP):**
+    - [x] **A Fazer:** Implementar a lógica no `Task` para que um `cleaner` possa marcar a necessidade de manutenção e adicionar notas.
 
 ---
 
