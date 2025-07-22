@@ -66,7 +66,7 @@ Esta seção detalha o progresso atual e os próximos passos para o desenvolvime
     - [x] Criado o modelo `Task` e definidas suas **associações** com `User` e `Unit`.
     - [x] Criada a migração para a nova tabela `Tasks`.
     - [x] Implementado o CRUD completo para Tarefas (`createTask`, `getAllTasks`, `getTaskById`, `updateTask`, `deleteTask`).
-    - [ ] **A Fazer:** Implementar a lógica para que um `cleaner` possa registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
+    - [x] Implementar a lógica para que um `cleaner` possa registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
 - **[ ] Módulo de Faxineiras (CRUD Básico Concluído):**
     - [x] Rota `GET /api/cleaners` para listar todos os usuários com o papel `cleaner`.
     - [ ] **A Fazer:** Implementar rotas para buscar uma faxineira por ID, atualizar e deletar.

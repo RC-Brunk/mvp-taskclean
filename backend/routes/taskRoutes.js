@@ -17,4 +17,10 @@ router.delete('/:id', checkRole(['manager']), taskController.deleteTask);
 router.get('/', taskController.getAllTasks);
 router.get('/:id', taskController.getTaskById);
 
+// Rota para uma faxineira iniciar uma tarefa
+router.patch('/:id/start', checkRole(['cleaner']), taskController.startTask);
+
+// Rota para uma faxineira finalizar uma tarefa
+router.patch('/:id/finish', checkRole(['cleaner']), taskController.finishTask);
+
 module.exports = router;
