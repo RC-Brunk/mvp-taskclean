@@ -1,16 +1,20 @@
 // backend/routes/taskRoutes.js
 const express = require('express');
 const router = express.Router();
-const taskController = require('../controllers/taskController.js');
-const authMiddleware = require('../middlewares/authMiddleware.js');
-const checkRole = require('../middlewares/checkRoleMiddleware.js');
+const taskController = require('../controllers/taskController');
+const authMiddleware = require('../middlewares/authMiddleware');
+const checkRole = require('../middlewares/checkRoleMiddleware');
 
-// Todas as rotas de tarefas exigem que o usuário esteja logado
+// Protege todas as rotas de tarefas
 router.use(authMiddleware);
 
-// Rota para criar uma nova tarefa (restringida a usuários 'manager')
+// Apenas 'managers' podem criar, atualizar ou deletar tarefas
 router.post('/', checkRole(['manager']), taskController.createTask);
+router.put('/:id', checkRole(['manager']), taskController.updateTask);
+router.delete('/:id', checkRole(['manager']), taskController.deleteTask);
 
-// TODO: Adicionar outras rotas de tarefas (GET, PUT, DELETE) aqui no futuro.
+// Por enquanto, vamos permitir que qualquer usuário logado possa ver as tarefas
+router.get('/', taskController.getAllTasks);
+router.get('/:id', taskController.getTaskById);
 
 module.exports = router;

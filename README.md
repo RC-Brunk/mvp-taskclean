@@ -1,4 +1,4 @@
-# MVP-TaskClean: Sistema de Gestão de Limpeza
+# Atlantico-Camareiras: Sistema de Gestão de Limpeza
 
 ![Status do Projeto](https://img.shields.io/badge/status-Em%20Desenvolvimento-yellow)
 ![Licença](https://img.shields.io/badge/license-MIT-blue)
@@ -10,8 +10,7 @@ Este é um projeto fullstack **em desenvolvimento** que visa criar um sistema pa
 ## 📖 Tabela de Conteúdos
 
 * [Sobre o Projeto](#sobre-o-projeto)
-* [Status do Projeto e Funcionalidades (MVP)](#-status-do-projeto-e-funcionalidades-mvp)
-* [Roadmap Futuro](#️-roadmap-futuro-pós-mvp)
+* [Status do Projeto (Roadmap)](#-backend---api)
 * [Tecnologias Utilizadas](#tecnologias-utilizadas)
 * [Como Começar](#como-começar)
     * [Pré-requisitos](#pré-requisitos)
@@ -24,60 +23,53 @@ Este é um projeto fullstack **em desenvolvimento** que visa criar um sistema pa
 
 ## 🎯 Sobre o Projeto
 
-O **TaskClean** foi concebido para resolver um problema comum na gestão de aluguéis de temporada e hotelaria: a falta de um sistema simples e eficaz para atribuir, gerenciar e, principalmente, verificar a conclusão de tarefas de limpeza.
+O **Atlantico-Camareiras** foi concebido para resolver um problema comum na gestão de aluguéis de temporada e hotelaria: a falta de um sistema simples e eficaz para atribuir, gerenciar e, principalmente, verificar a conclusão de tarefas de limpeza.
 
 A solução consiste em duas interfaces principais:
 1.  Um **Painel Web** para gerentes, onde é possível cadastrar unidades (quartos), faxineiras, criar e delegar tarefas com checklists.
 2.  Um **Aplicativo Mobile** para as faxineiras, onde elas visualizam suas tarefas diárias, seguem os checklists e enviam uma foto como prova irrefutável de que o serviço foi concluído nos padrões exigidos.
 
+Este repositório contém o código-fonte completo do projeto, desde a API backend até os aplicativos frontend (Web e Mobile).
 
 ---
-
-## 🚦 Status do Projeto e Funcionalidades (MVP)
-
-Este projeto está em **desenvolvimento ativo**. Abaixo está o status atual das principais funcionalidades planejadas para o Produto Mínimo Viável (MVP).
-
-### ✅ Fundamento (Concluído)
-- [x] Definição da stack tecnológica (Node.js, React, React Native, PostgreSQL, Docker).
-- [x] Estruturação do projeto em monorepo (backend, frontend-web, mobile-app).
-- [x] Configuração do ambiente de desenvolvimento com Docker e Docker Compose.
-- [x] Validação da conexão entre o backend e o banco de dados.
-- [x] Configuração do Git, `.gitignore` e versionamento inicial no GitHub.
 
 ### 🚀 Backend - API
 
-Nosso desenvolvimento backend está dividido em fases para garantir a entrega de valor de forma incremental e organizada.
+Esta seção detalha o progresso atual e os próximos passos para o desenvolvimento da nossa API RESTful, que servirá como nosso mapa.
 
 ---
 
-#### ✅ **Fase 1: Fundação e Autenticação (Concluído)**
+#### ✅ **Fase 1: Fundação e Refatoração (Concluído)**
 
-- [x] **Infraestrutura:** Ambiente 100% funcional com Docker, Node.js e PostgreSQL.
-- [x] **Gestão de Banco de Dados:** Sistema de Migrações com `sequelize-cli` implementado e funcional.
-- [x] **Segurança:** Middlewares de autenticação (JWT) e autorização (papéis/roles) criados e testados.
-- [x] **CRUD Base:** CRUD completo para `Unidades` implementado como prova de conceito da arquitetura.
+- **[x] Configuração do Servidor:** Inicialização do servidor Express com middlewares essenciais (`cors`, `express.json`).
+- **[x] Gestão de Schema com Migrations:**
+    - [x] Implementação do `sequelize-cli` para um controle de versão profissional do banco de dados.
+    - [x] Criação das migrações iniciais para as tabelas `Users` e `Units`.
+- **[x] Autenticação e Autorização:**
+    - [x] Sistema completo de Autenticação (`register`/`login` com JWT e bcryptjs).
+    - [x] Middlewares de Autorização (`authMiddleware`, `checkRoleMiddleware`) para proteger rotas por login e por papel.
+- **[x] Refatoração do Modelo `User`:**
+    - [x] Alteração do campo `email` para `username`.
+    - [x] Adição do campo `fullName`.
+    - [x] Atualização da migração e dos controllers de autenticação.
+- **[x] Atualização do Modelo `Unit`:**
+    - [x] Adição do status `blocked` ao campo de status da unidade.
+    - [x] Atualização da migração da tabela `Units`.
 
 ---
 
-#### ⏳ **Fase 2: Refatoração e Funcionalidades Core (Em Andamento)**
+#### ⏳ **Fase 2: Módulos Principais (Em Andamento)**
 
-- [ ] **Refatoração do Modelo `User`:**
-    - [ ] Alterar o campo `email` para `username` para o sistema de login.
-    - [ ] Adicionar o campo `fullName` para exibição de nomes.
-    - [ ] Atualizar a migração da tabela `Users`.
-    - [ ] Ajustar as rotas e controllers de `register` e `login` para usar `username`.
-- [ ] **Atualização do Modelo `Unit`:**
-    - [ ] Adicionar o status `blocked` ao campo de status da unidade.
-    - [ ] Atualizar a migração da tabela `Units`.
-- - [ ] **Módulo de Tarefas (Em Andamento):**
-    - [x] Criar o modelo `Task` e definir suas **associações** com `User` e `Unit`.
-    - [x] Criar a migração para a nova tabela `Tasks`.
-    - [ ] Implementar o CRUD de Tarefas, permitindo que um `manager` atribua uma tarefa a um `cleaner`.
-        - [x] Lógica de **Criação** (`createTask`) implementada.
-        - [x] Lógica de **Leitura** (`getAllTasks`, `getTaskById` com `include`) implementada.
-        - [ ] **A Fazer:** Lógica de **Atualização** (`updateTask`).
-        - [ ] **A Fazer:** Lógica de **Deleção** (`deleteTask`).
-    - [ ] **A Fazer:** Implementar a lógica para registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
+- **[x] Módulo de Unidades (Concluído):**
+    - [x] Implementação do CRUD completo (Create, Read, Update, Delete) para gerenciar as unidades.
+- **[x] Módulo de Tarefas (CRUD Básico Concluído):**
+    - [x] Criado o modelo `Task` e definidas suas **associações** com `User` e `Unit`.
+    - [x] Criada a migração para a nova tabela `Tasks`.
+    - [x] Implementado o CRUD completo para Tarefas (`createTask`, `getAllTasks`, `getTaskById`, `updateTask`, `deleteTask`).
+    - [ ] **A Fazer:** Implementar a lógica para que um `cleaner` possa registrar o início (`startedAt`) e fim (`completedAt`) de uma tarefa.
+- **[ ] Módulo de Faxineiras (CRUD Básico Concluído):**
+    - [x] Rota `GET /api/cleaners` para listar todos os usuários com o papel `cleaner`.
+    - [ ] **A Fazer:** Implementar rotas para buscar uma faxineira por ID, atualizar e deletar.
 - **[ ] Módulo de Checklists (A Fazer):**
     - [ ] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
     - [ ] **A Fazer:** Permitir que o `manager` anexe um template de checklist ao criar uma `Tarefa`.
@@ -88,61 +80,13 @@ Nosso desenvolvimento backend está dividido em fases para garantir a entrega de
 
 #### 📝 **Fase 3: Funcionalidades Avançadas (Futuro)**
 
-- **[ ] Upload de Fotos e Vídeos:** Implementar o upload de mídias para o S3 como comprovação da tarefa.
-- **[ ] Notificações:** Sistema de notificações para novas tarefas ou alertas de manutenção.
-- **[ ] Testes Automatizados:** Implementação de uma suíte de testes para a API.
-
-#### ✅ **Fase 2: Módulos Principais (CRUDs)**
-
-- **[x] Módulo de Unidades (Concluído):**
-    - [x] Implementação do CRUD completo (Create, Read, Update, Delete) para gerenciar as unidades (quartos/propriedades).
-    - [x] Rotas protegidas para garantir que apenas usuários autenticados (e `managers` para ações específicas) possam interagir com as unidades.
-- **[ ] Módulo de Faxineiras (Em Andamento):**
-    - [x] Rota `GET /api/cleaners` para listar todos os usuários com o papel `cleaner`.
-    - [ ] **A Fazer:** Implementar rotas para buscar uma faxineira por ID, atualizar seus dados (se necessário) e deletá-la.
-- **[ ] Módulo de Tarefas (A Fazer):**
-    - [ ] **A Fazer:** Criar o modelo `Task` e definir suas **associações** (relações) com os modelos `User` e `Unit`.
-    - [ ] **A Fazer:** Criar a migração para a nova tabela `Tasks`.
-    - [ ] **A Fazer:** Implementar o CRUD completo para Tarefas, permitindo que um `manager` crie e atribua uma tarefa de limpeza a um `cleaner` para uma `unit` específica.
-
----
-
-#### 📝 **Fase 3: Funcionalidades Avançadas (Futuro)**
-
-- **[ ] Upload de Fotos:**
+- **[ ] Upload de Fotos e Vídeos:**
     - [ ] **A Fazer:** Implementar a lógica com `multer` para receber o upload da foto de comprovação.
     - [ ] **A Fazer:** Integrar com o `aws-sdk` para salvar a imagem no nosso bucket S3.
 - **[ ] Notificações:**
-    - [ ] **A Fazer:** Pesquisar e implementar um sistema de notificações (ex: WebSockets ou serviço de push) para avisar os `cleaners` sobre novas tarefas.
+    - [ ] **A Fazer:** Pesquisar e implementar um sistema de notificações para avisar os `cleaners` sobre novas tarefas.
 - **[ ] Testes Automatizados:**
-    - [ ] **A Fazer:** Configurar um ambiente de testes (ex: com Jest e Supertest) para criar testes unitários e de integração para nossa API.
-
-### 📝 Frontend - Painel Web (A Fazer)
-- [ ] Estrutura inicial do projeto React.
-- [ ] Tela de Login.
-- [ ] Dashboard principal.
-- [ ] Telas de CRUD para Unidades, Faxineiras e Tarefas.
-- [ ] Componente para visualização da foto de comprovação.
-
-### 📝 Frontend - App Mobile (A Fazer)
-- [ ] Estrutura inicial do projeto React Native com Expo.
-- [ ] Tela de Login.
-- [ ] Tela com a lista de tarefas do dia.
-- [ ] Tela de detalhes da tarefa com o checklist.
-- [ ] Integração da câmera para a comprovação fotográfica.
-
----
-
-## 🗺️ Roadmap Futuro (Pós-MVP)
-
-Após a conclusão do MVP, a visão é evoluir o **TaskClean** com funcionalidades mais avançadas para agregar ainda mais valor ao produto.
-
-- **Notificações em Tempo Real:** Enviar notificações push para as faxineiras quando uma nova tarefa for atribuída.
-- **Dashboard com Relatórios:** Gráficos e análises para os gerentes sobre tempo médio de limpeza, avaliações, etc.
-- **Sistema de Avaliação:** Permitir que gerentes avaliem a limpeza de cada tarefa concluída.
-- **Múltiplos Níveis de Acesso:** Adicionar papéis como "Supervisor" com permissões diferentes das de "Gerente".
-- **Internacionalização (i18n):** Adaptar o sistema para múltiplos idiomas.
-- **Testes Automatizados:** Implementação de uma suíte de testes (unitários, integração e E2E) para garantir a qualidade e estabilidade do código.
+    - [ ] **A Fazer:** Configurar um ambiente de testes
 
 ---
 
