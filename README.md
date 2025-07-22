@@ -70,9 +70,9 @@ Esta seção detalha o progresso atual e os próximos passos para o desenvolvime
 - **[ ] Módulo de Faxineiras (CRUD Básico Concluído):**
     - [x] Rota `GET /api/cleaners` para listar todos os usuários com o papel `cleaner`.
     - [ ] **A Fazer:** Implementar rotas para buscar uma faxineira por ID, atualizar e deletar.
-- **[ ] Módulo de Checklists (A Fazer):**
-    - [ ] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
-    - [ ] **A Fazer:** Permitir que o `manager` anexe um template de checklist ao criar uma `Tarefa`.
+- **[x] Módulo de Checklists (A Fazer):**
+    - [x] **A Fazer:** Criar um modelo e CRUD para "Templates de Checklist".
+    - [x] **A Fazer:** Permitir que o `manager` anexe um template de checklist ao criar uma `Tarefa`.
 - **[x] Módulo de Manutenção (MVP):**
     - [x] **A Fazer:** Implementar a lógica no `Task` para que um `cleaner` possa marcar a necessidade de manutenção e adicionar notas.
 

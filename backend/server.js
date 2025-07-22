@@ -7,6 +7,7 @@ const cors = require('cors');
 const sequelize = require('./config/database'); // Nossa instância configurada do Sequelize
 const cleanerRoutes = require('./routes/cleanerRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const checklistTemplateRoutes = require('./routes/checklistTemplateRoutes');
 
 // --- Importação dos Modelos ---
 // (É uma boa prática importar os modelos no arquivo principal para que o Sequelize os reconheça, se necessário em outras partes)
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes); // Rotas de Autenticação
 app.use('/api/units', unitRoutes); // Rotas de Unidades
 app.use('/api/cleaners', cleanerRoutes); //Usar as rotas de faxineiras com o prefixo /api/cleaners
 app.use('/api/tasks', taskRoutes);// Usar as rotas de tarefas com o prefixo /api/tasks
+app.use('/api/checklist-templates', checklistTemplateRoutes);// Usar as rotas de templates de checklist com o prefixo /api/checklist-templates
 
 
 // --- 4. Conexão com o Banco de Dados e Inicialização do Servidor ---

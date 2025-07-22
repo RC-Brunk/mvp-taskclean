@@ -3,22 +3,56 @@
 const User = require('../models/User');
 const Unit = require('../models/Unit');
 const Task = require('../models/Task');
+const ChecklistTemplate = require('../models/ChecklistTemplate');
 
-// --- CRIAR TAREFA (Concluído) ---
+
 const createTask = async (req, res) => {
-    const { unitId, cleanerId, type, checklist } = req.body;
+    // Agora, esperamos também o checklistTemplateId
+    const { unitId, cleanerId, type, checklistTemplateId } = req.body;
+
     if (!unitId || !cleanerId || !type) {
         return res.status(400).json({ message: 'Os campos unitId, cleanerId e type são obrigatórios.' });
     }
+
     try {
+        // Verificações que já tínhamos: se a Unidade e o Cleaner existem
         const unitExists = await Unit.findByPk(unitId);
         const cleanerExists = await User.findOne({ where: { id: cleanerId, role: 'cleaner' } });
 
-        if (!unitExists) return res.status(404).json({ message: 'Unidade não encontrada.' });
-        if (!cleanerExists) return res.status(404).json({ message: 'Usuário cleaner não encontrado.' });
+        if (!unitExists) {
+            return res.status(404).json({ message: 'Unidade não encontrada.' });
+        }
+        if (!cleanerExists) {
+            return res.status(404).json({ message: 'Usuário cleaner não encontrado.' });
+        }
 
-        const newTask = await Task.create({ unitId, cleanerId, type, checklist });
+        // --- NOVA LÓGICA DE CHECKLIST ---
+        let checklistData = null; // Prepara uma variável para o nosso checklist
+
+        // Se um checklistTemplateId foi enviado na requisição...
+        if (checklistTemplateId) {
+            const template = await ChecklistTemplate.findByPk(checklistTemplateId);
+            if (!template) {
+                // Se o template não for encontrado, retorna um erro
+                return res.status(404).json({ message: 'Modelo de Checklist não encontrado.' });
+            }
+            // ...copiamos a estrutura de 'items' do template para a nossa variável.
+            checklistData = template.items;
+        }
+        // --- FIM DA NOVA LÓGICA ---
+
+
+        // Criamos a nova tarefa, passando o checklist que obtivemos do template
+        const newTask = await Task.create({
+            unitId,
+            cleanerId,
+            type,
+            checklist: checklistData, // Salva a estrutura do checklist na tarefa
+            checklistTemplateId: checklistTemplateId || null // Salva a referência ao template usado
+        });
+
         res.status(201).json(newTask);
+
     } catch (error) {
         console.error("Erro ao criar tarefa:", error);
         res.status(500).json({ message: "Ocorreu um erro no servidor." });
