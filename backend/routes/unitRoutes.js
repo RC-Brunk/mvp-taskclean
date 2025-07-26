@@ -1,6 +1,7 @@
 // backend/routes/unitRoutes.js
 const express = require('express');
 const router = express.Router();
+router.use(express.json());
 const unitController = require('../controllers/unitController.js');
 const authMiddleware = require('../middlewares/authMiddleware.js');
 const checkRole = require('../middlewares/checkRoleMiddleware.js');

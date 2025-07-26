@@ -31,7 +31,7 @@ A solução consiste em duas interfaces principais:
 
 Este repositório contém o código-fonte completo do projeto, desde a API backend até os aplicativos frontend (Web e Mobile).
 
----
+---=
 
 ### 🚀 Backend - API
 

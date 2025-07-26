@@ -33,7 +33,7 @@ const app = express();
 
 // Middlewares essenciais
 app.use(cors()); // Habilita CORS para permitir que nosso frontend acesse a API
-app.use(express.json()); // Habilita o Express para entender o corpo de requisições em formato JSON
+// app.use(express.json()); // Habilita o Express para entender o corpo de requisições em formato JSON
 
 
 // --- 3. Definição das Rotas da API ---

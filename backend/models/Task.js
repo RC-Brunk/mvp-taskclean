@@ -42,7 +42,13 @@ const Task = sequelize.define('Task', {
     maintenance_notes: {
         type: DataTypes.TEXT,
         allowNull: true,
+        
+        proofImageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: 'URL da imagem de comprovação armazenada no S3.'
     }
+    } 
     // As colunas de chave estrangeira (unitId, cleanerId) serão adicionadas
     // automaticamente pelo Sequelize quando definirmos as associações.
 }, {
