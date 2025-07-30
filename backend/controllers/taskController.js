@@ -139,6 +139,8 @@ const finishTask = async (req, res) => {
 };
 
 const uploadProofImage = async (req, res) => {
+    console.log('--- CHEGOU NO CONTROLLER UPLOADPROOFIMAGE ---');
+    console.log('req.file:', req.file); // <-- VAMOS VER O QUE HÁ AQUI
     try {
         const { id: taskId } = req.params;
         const { id: cleanerId } = req.user;
