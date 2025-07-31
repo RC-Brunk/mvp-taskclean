@@ -1,4 +1,4 @@
-// backend/config/database.js
+
 const { Sequelize } = require('sequelize');
 require('dotenv').config(); // Garante que as variáveis de ambiente sejam carregadas
 
@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         dialect: 'postgres',
-        logging: console.log // Opcional: desliga os logs de SQL no console
+        logging: console.log 
     }
 );
 

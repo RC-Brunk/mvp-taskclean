@@ -1,6 +1,3 @@
-// backend/controllers/taskController.js
-
-// --- 1. Importações ---
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const User = require('../models/User');
 const Unit = require('../models/Unit');
@@ -8,7 +5,7 @@ const Task = require('../models/Task');
 const ChecklistTemplate = require('../models/ChecklistTemplate');
 const crypto = require('crypto');
 
-// --- 2. Funções do Controller ---
+// --- Funções do CRUD e Ações ---
 
 const createTask = async (req, res) => {
     const { unitId, cleanerId, type, checklistTemplateId } = req.body;
@@ -20,14 +17,12 @@ const createTask = async (req, res) => {
         const cleanerExists = await User.findOne({ where: { id: cleanerId, role: 'cleaner' } });
         if (!unitExists) return res.status(404).json({ message: 'Unidade não encontrada.' });
         if (!cleanerExists) return res.status(404).json({ message: 'Usuário cleaner não encontrado.' });
-
         let checklistData = null;
         if (checklistTemplateId) {
             const template = await ChecklistTemplate.findByPk(checklistTemplateId);
             if (!template) return res.status(404).json({ message: 'Modelo de Checklist não encontrado.' });
             checklistData = template.items;
         }
-
         const newTask = await Task.create({ unitId, cleanerId, type, checklist: checklistData, checklistTemplateId: checklistTemplateId || null });
         res.status(201).json(newTask);
     } catch (error) {
@@ -105,7 +100,6 @@ const startTask = async (req, res) => {
         if (!task) return res.status(404).json({ message: 'Tarefa não encontrada.' });
         if (task.cleanerId !== cleanerId) return res.status(403).json({ message: 'Acesso negado. Esta tarefa não foi atribuída a você.' });
         if (task.status !== 'pending') return res.status(409).json({ message: `Esta tarefa não pode ser iniciada pois seu status é '${task.status}'.`});
-        
         task.status = 'in_progress';
         task.startedAt = new Date();
         await task.save();
@@ -125,7 +119,6 @@ const finishTask = async (req, res) => {
         if (!task) return res.status(404).json({ message: 'Tarefa não encontrada.' });
         if (task.cleanerId !== cleanerId) return res.status(403).json({ message: 'Acesso negado. Esta tarefa não foi atribuída a você.' });
         if (task.status !== 'in_progress') return res.status(409).json({ message: `Esta tarefa não pode ser finalizada pois seu status é '${task.status}'.`});
-        
         task.status = 'pending_approval';
         task.completedAt = new Date();
         if (maintenance_required !== undefined) task.maintenance_required = maintenance_required;
@@ -139,17 +132,17 @@ const finishTask = async (req, res) => {
 };
 
 const uploadProofImage = async (req, res) => {
-    console.log('--- CHEGOU NO CONTROLLER UPLOADPROOFIMAGE ---');
-    console.log('req.file:', req.file); // <-- VAMOS VER O QUE HÁ AQUI
     try {
         const { id: taskId } = req.params;
         const { id: cleanerId } = req.user;
         const file = req.file;
-        if (!file) return res.status(400).json({ message: 'Nenhum arquivo de imagem enviado.' });
+        if (!file) {
+            return res.status(400).json({ message: 'Nenhum arquivo de imagem enviado.' });
+        }
 
         const task = await Task.findByPk(taskId);
         if (!task) return res.status(404).json({ message: 'Tarefa não encontrada.' });
-        if (task.cleanerId !== cleanerId) return res.status(403).json({ message: 'Acesso negado. Esta tarefa não foi atribuída a você.' });
+        if (task.cleanerId !== cleanerId) return res.status(403).json({ message: 'Acesso negado.' });
 
         const s3Client = new S3Client({
             region: process.env.AWS_REGION,
@@ -181,12 +174,12 @@ const uploadProofImage = async (req, res) => {
         });
         res.status(200).json(taskWithIncludes);
     } catch (error) {
-        console.error("Erro ao fazer upload da imagem de comprovação:", error);
-        res.status(500).json({ message: "Ocorreu um erro no servidor." });
+        console.error("ERRO DETALHADO NO UPLOAD:", error);
+        res.status(500).json({ message: "Ocorreu um erro no servidor.", errorName: error.name, errorMessage: error.message });
     }
 };
 
-// --- 3. Exportações ---
+
 module.exports = {
     createTask,
     getAllTasks,

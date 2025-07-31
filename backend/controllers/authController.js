@@ -1,10 +1,7 @@
-// backend/controllers/authController.js
-
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// -- REGISTRO (Atualizado para usar username e fullName) --
 const register = async (req, res) => {
     // Passo 1: Extrair dados do corpo da requisição
     const { fullName, username, password, role } = req.body;
@@ -23,7 +20,7 @@ const register = async (req, res) => {
         }
 
         // Passo 4: Criar o novo usuário no banco
-        // O hook 'beforeCreate' no modelo User.js fará o hash da senha automaticamente
+        
         const newUser = await User.create({
             fullName,
             username,
