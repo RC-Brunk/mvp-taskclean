@@ -1,19 +1,49 @@
+// backend/routes/checklistTemplateRoutes.js
 const express = require('express');
 const router = express.Router();
-router.use(express.json());
 const checklistTemplateController = require('../controllers/checklistTemplateController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const checkRole = require('../middlewares/checkRoleMiddleware');
 
-// Protege todas as rotas de templates
-router.use(authMiddleware);
-router.use(checkRole(['manager'])); // Apenas managers podem gerenciar templates
+const jsonParser = express.json();
 
-// Rotas do CRUD para ChecklistTemplates
-router.post('/', checklistTemplateController.createTemplate);
-router.get('/', checklistTemplateController.getAllTemplates);
-router.get('/:id', checklistTemplateController.getTemplateById);
-router.put('/:id', checklistTemplateController.updateTemplate);
-router.delete('/:id', checklistTemplateController.deleteTemplate);
+// --- Todas as rotas abaixo são protegidas e restritas a managers ---
+
+router.post(
+    '/',
+    authMiddleware,
+    checkRole(['manager']),
+    jsonParser,
+    checklistTemplateController.createTemplate
+);
+
+router.get(
+    '/',
+    authMiddleware,
+    checkRole(['manager']),
+    checklistTemplateController.getAllTemplates
+);
+
+router.get(
+    '/:id',
+    authMiddleware,
+    checkRole(['manager']),
+    checklistTemplateController.getTemplateById
+);
+
+router.put(
+    '/:id',
+    authMiddleware,
+    checkRole(['manager']),
+    jsonParser,
+    checklistTemplateController.updateTemplate
+);
+
+router.delete(
+    '/:id',
+    authMiddleware,
+    checkRole(['manager']),
+    checklistTemplateController.deleteTemplate
+);
 
 module.exports = router;

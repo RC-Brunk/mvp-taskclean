@@ -1,20 +1,43 @@
-// backend/routes/unitRoutes.js
 const express = require('express');
 const router = express.Router();
-router.use(express.json());
-const unitController = require('../controllers/unitController.js');
-const authMiddleware = require('../middlewares/authMiddleware.js');
-const checkRole = require('../middlewares/checkRoleMiddleware.js');
+const unitController = require('../controllers/unitController');
+const authMiddleware = require('../middlewares/authMiddleware');
+const checkRole = require('../middlewares/checkRoleMiddleware');
 
-// Aplicamos o middleware de autenticação a todas as rotas de unidades.
-// Apenas usuários logados poderão acessar estas rotas.
-router.use(authMiddleware);
+const jsonParser = express.json(); // Criamos uma instância do parser
 
-router.get('/', unitController.getAllUnits);
-router.get('/:id', unitController.getUnitById)
+// Rota para obter todas as unidades (protegida por login)
+router.get('/', authMiddleware, unitController.getAllUnits);
 
-router.post('/', checkRole(['manager']), unitController.createUnit);
-router.put('/:id', checkRole(['manager']), unitController.updateUnit);
-router.delete('/:id', checkRole(['manager']), unitController.deleteUnit);
+// Rota para obter uma unidade por ID (protegida por login)
+router.get('/:id', authMiddleware, unitController.getUnitById);
+
+// Rota para criar uma nova unidade (protegida por login E papel de manager)
+router.post(
+    '/',
+    authMiddleware,
+    checkRole(['manager']),
+    jsonParser,
+    unitController.createUnit
+);
+
+// Rota para atualizar uma unidade (protegida por login E papel de manager)
+router.put(
+    '/:id',
+    authMiddleware,
+    checkRole(['manager']),
+    jsonParser,
+    unitController.updateUnit
+);
+
+// Rota para deletar uma unidade (protegida por login E papel de manager)
+router.delete(
+    '/:id',
+    authMiddleware,
+    checkRole(['manager']),
+    unitController.deleteUnit
+);
+
+router.get('/:id/active-task', unitController.getActiveTaskForUnit);
 
 module.exports = router;

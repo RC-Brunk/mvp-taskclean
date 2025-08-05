@@ -1,0 +1,32 @@
+/* frontend-web/src/components/UnitCard.css */
+.unit-card {
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid;
+}
+
+.unit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.unit-card-icon {
+  margin-bottom: 8px;
+}
+
+.unit-card-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.unit-card-status {
+  font-size: 14px;
+  margin-top: 5px;
+}

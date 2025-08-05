@@ -1,18 +1,18 @@
 // backend/routes/cleanerRoutes.js
 const express = require('express');
 const router = express.Router();
-const cleanerController = require('../controllers/cleanerController.js');
-const authMiddleware = require('../middlewares/authMiddleware.js');
+const cleanerController = require('../controllers/cleanerController');
+const authMiddleware = require('../middlewares/authMiddleware');
+const checkRole = require('../middlewares/checkRoleMiddleware');
 
-// Protege todas as rotas de cleaners
-router.use(authMiddleware);
+// Rota para obter todas as faxineiras (protegida por login e papel de manager)
+router.get(
+    '/',
+    authMiddleware,
+    checkRole(['manager']),
+    cleanerController.getAllCleaners
+);
 
-// Importa o novo middleware no topo do arquivo
-const checkRole = require('../middlewares/checkRoleMiddleware.js');
-
-// ... (depois da linha router.use(authMiddleware);)
-
-// Apenas usuários com o papel 'manager' podem acessar esta rota
-router.get('/', checkRole(['manager']), cleanerController.getAllCleaners);
+// TODO: Adicionar rotas para GET by ID, UPDATE, e DELETE no futuro.
 
 module.exports = router;

@@ -17,7 +17,7 @@ router.patch('/:id/start', authMiddleware, checkRole(['cleaner']), taskControlle
 router.patch('/:id/finish', authMiddleware, checkRole(['cleaner']), jsonParser, taskController.finishTask);
 router.post('/:id/upload-proof', authMiddleware, checkRole(['cleaner']), upload.single('proofImage'), taskController.uploadProofImage);
 
-// --- Rotas Abertas para todos os usuários logados ---
+// --- Rotas para todos os usuários logados ---
 router.get('/', authMiddleware, taskController.getAllTasks);
 router.get('/:id', authMiddleware, taskController.getTaskById);
 

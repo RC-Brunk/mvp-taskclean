@@ -1,9 +1,12 @@
-// backend/controllers/unitController.js
+
 
 // 1. Importação do nosso modelo 'Unit' para interagir com o banco de dados.
 const Unit = require('../models/Unit');
+const User = require('../models/User');
+const Task = require('../models/Task');
 
-// --- CRIAR ---
+
+
 const createUnit = async (req, res) => {
     // Pega o nome e a descrição do corpo da requisição
     const { name, description } = req.body;
@@ -120,6 +123,29 @@ const deleteUnit = async (req, res) => {
     }
 };
 
+const getActiveTaskForUnit = async (req, res) => {
+    try {
+        const { id } = req.params;
+        // Encontra a tarefa mais recente para a unidade
+        const task = await Task.findOne({
+            where: { unitId: id },
+            order: [['createdAt', 'DESC']], // Pega a mais recente
+            include: [
+                { model: User, as: 'cleaner', attributes: ['id', 'fullName'] }
+            ]
+        });
+
+        if (!task) {
+            return res.status(404).json({ message: 'Nenhuma tarefa encontrada para esta unidade.' });
+        }
+
+        res.status(200).json(task);
+    } catch (error) {
+        console.error('Erro ao buscar tarefa da unidade:', error);
+        res.status(500).json({ message: 'Ocorreu um erro no servidor.' });
+    }
+};
+
 
 // 2. Exportação de todas as funções para serem usadas nas rotas.
 module.exports = {
@@ -128,4 +154,6 @@ module.exports = {
     getUnitById,
     updateUnit,
     deleteUnit,
+    getActiveTaskForUnit,
+
 };

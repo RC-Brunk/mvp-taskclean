@@ -1,66 +1,39 @@
 // frontend-web/src/components/UnitCard.jsx
 import React from 'react';
+import './UnitCard.css'; // Importa nosso novo arquivo de estilo
+// Importa os ícones que vamos usar
+import { FaBed, FaCheckCircle, FaExclamationTriangle, FaLock, FaSyncAlt } from 'react-icons/fa';
 
 function UnitCard({ unit }) {
-  // Mapeia o status do backend para cores e texto
+  // Mapeia o status do backend para cores, texto e agora ÍCONES
   const statusInfo = {
-    dirty: { text: 'Para Arrumar', color: '#fff1f0', borderColor: '#ffa39e' },
-    in_progress: { text: 'Em Arrumação', color: '#fffbe6', borderColor: '#ffe58f' },
-    clean: { text: 'Arrumado', color: '#e6f7ff', borderColor: '#91d5ff' },
-    blocked: { text: 'Bloqueado', color: '#f6f6f6', borderColor: '#d9d9d9' },
+    dirty: { text: 'Para Arrumar', color: '#fff1f0', borderColor: '#ffa39e', Icon: FaBed },
+    in_progress: { text: 'Em Arrumação', color: '#fffbe6', borderColor: '#ffe58f', Icon: FaSyncAlt },
+    clean: { text: 'Arrumado', color: '#e6f7ff', borderColor: '#91d5ff', Icon: FaCheckCircle },
+    blocked: { text: 'Bloqueado', color: '#f6f6f6', borderColor: '#d9d9d9', Icon: FaLock },
   };
 
-  // --- NOVA FUNÇÃO ---
-  // Extrai apenas os números do nome da unidade para formatar a exibição
+  const currentStatus = statusInfo[unit.status] || { text: unit.status, color: '#fff', borderColor: '#ccc', Icon: FaExclamationTriangle };
+
   const formatUnitName = (name) => {
-    const numbers = name.match(/\d+/g); // Encontra todos os números no nome
-    if (numbers) {
-      return `Apto. ${numbers.join('')}`; // Retorna "Apto." seguido do número
-    }
-    return name; // Se não encontrar números, retorna o nome original
-  };
-  // --- FIM DA NOVA FUNÇÃO ---
-
-  const styles = {
-    card: {
-      border: `1px solid ${statusInfo[unit.status]?.borderColor || '#ccc'}`,
-      backgroundColor: statusInfo[unit.status]?.color || '#fff',
-      padding: '15px',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      transition: 'transform 0.2s',
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      textAlign: 'center',
-    },
-    name: {
-      fontWeight: 'bold',
-      fontSize: '18px',
-      minHeight: '44px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    status: {
-      fontSize: '14px',
-      marginTop: '5px',
-    }
+    const numbers = name.match(/\d+/g);
+    if (numbers) return `Apto. ${numbers.join('')}`;
+    return name;
   };
 
-  const handleMouseEnter = (e) => { e.currentTarget.style.transform = 'scale(1.03)'; };
-  const handleMouseLeave = (e) => { e.currentTarget.style.transform = 'scale(1)'; };
+  // Estilos dinâmicos que dependem do status (cores)
+  const cardStyle = {
+    borderColor: currentStatus.borderColor,
+    backgroundColor: currentStatus.color,
+  };
 
   return (
-    <div 
-      style={styles.card}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {/* Usa a nova função para formatar o nome */}
-      <div style={styles.name}>{formatUnitName(unit.name)}</div>
-      <div style={styles.status}>{statusInfo[unit.status]?.text || unit.status}</div>
+    <div className="unit-card" style={cardStyle}>
+      <div className="unit-card-icon">
+        <currentStatus.Icon size={24} color="#555" />
+      </div>
+      <div className="unit-card-name">{formatUnitName(unit.name)}</div>
+      <div className="unit-card-status">{currentStatus.text}</div>
     </div>
   );
 }
