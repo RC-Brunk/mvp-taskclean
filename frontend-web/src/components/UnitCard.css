@@ -1,5 +1,5 @@
-/* frontend-web/src/components/UnitCard.css */
 .unit-card {
+  position: relative; /* Para posicionar o ícone da vassoura */
   padding: 15px;
   border-radius: 8px;
   cursor: pointer;
@@ -12,21 +12,19 @@
   border: 1px solid;
 }
 
-.unit-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
 .unit-card-icon {
   margin-bottom: 8px;
 }
 
-.unit-card-name {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.unit-card-status {
-  font-size: 14px;
-  margin-top: 5px;
+.unit-card-broom-icon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

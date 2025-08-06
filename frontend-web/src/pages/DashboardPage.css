@@ -48,63 +48,44 @@ main {
   overflow: hidden;
 }
 
-.banner-hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.1) 0%,           /* Escuro sutil no topo */
-    rgba(0,0,0,0.2) 40%,          /* Meio termo */
-    rgba(0,0,0,0.4) 70%,          /* Mais escuro */
-    rgba(255,255,255,0.8) 100%    /* ← SOMBRA BRANCA FORTE NA BASE */
-  );
-  z-index: 1;
-}
-
 .banner-hero::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 120px;                  /* Altura da sombra */
+  height: 120px;                  
   background: linear-gradient(
     to top,
-    rgba(255,255,255,0.9) 0%,     /* Branco forte na base */
-    rgba(255,255,255,0.6) 30%,    /* Branco médio */
-    rgba(255,255,255,0.3) 60%,    /* Branco fraco */
-    rgba(255,255,255,0) 100%      /* Transparente no topo */
+    rgba(255,255,255,0.9) 0%,     
+    rgba(255,255,255,0.6) 30%,   
+    rgba(255,255,255,0.3) 60%,    
+    rgba(255,255,255,0) 100%     
   );
   z-index: 1;
 }
 
-.banner-content {
+.banner-content {                   /*Botão Vermelho*/
   position: relative;
   z-index: 2;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 0 0 auto;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
-  padding: 40px 20px;
+  padding: 10px 0;
   color: white;
 }
 
-.banner-spacer {
-  flex: 1;                         /* Ocupa espaço à esquerda */
-}
 
 .banner-action-button {
-  background-color: #e53e3e;    
+  background-color: #e2153f;    
   color: white;
   border: none;
   padding: 15px 30px;
-  border-radius: 8px;
+  border-top-left-radius: 40px; /* Border-radius apenas no lado esquerdo */
+  border-bottom-left-radius: 40px; /* Border-radius apenas no lado esquerdo */
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;

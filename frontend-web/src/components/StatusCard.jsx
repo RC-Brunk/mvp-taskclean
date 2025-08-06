@@ -1,6 +1,6 @@
 // frontend-web/src/components/StatusCard.jsx
 import React from 'react';
-import { FaCheck, FaClock, FaExclamationTriangle, } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 import { BiLoaderCircle } from "react-icons/bi";
 import { GiBroom, GiPadlock } from "react-icons/gi";
 

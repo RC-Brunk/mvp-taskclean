@@ -7,7 +7,8 @@ import UnitCard from '../components/UnitCard';
 import TaskDetailModal from '../components/TaskDetailModal';
 import MaintenanceAlert from '../components/MaintenanceAlert'; // 1. Importa o novo componente de alerta
 import './DashboardPage.css';
-import bannerImage from '../assets/Picture.png';
+import bannerImage from '../assets/HotelAtlantico.png'; // 2. Importa a imagem do banner
+
 
 function DashboardPage() {
   const [units, setUnits] = useState([]);
@@ -102,8 +103,7 @@ const calculatePercentage = (count) => {
   <div className="dashboard-container">
     {/* Banner com imagem de fundo - SEM título */}
     <div className="banner-hero" style={{ backgroundImage: `url(${bannerImage})` }}>
-      <div className="banner-content">
-        <div className="banner-spacer"></div> {/* Espaço vazio à esquerda */}
+      <div className="banner-content">     {/* Botão Vermelho */}
         <button className="banner-action-button">
           Liberar apartamentos para limpeza
         </button>
