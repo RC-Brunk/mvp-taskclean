@@ -10,27 +10,27 @@ import { FaCheck } from 'react-icons/fa';
 function UnitCard({ unit }) {
   const statusInfo = {
     dirty: { 
-      text: 'Para Arrumar', 
-      color: '#fff1f0', 
-      borderColor: '#ffccc7', 
+       
+      color: '#ffffffff', 
+      
       Icon: IoIosBed 
     },
     in_progress: { 
-      text: 'Em Arrumação', 
-      color: '#fffbe6', 
-      borderColor: '#ffe58f', 
+       
+      color: '#ffffffff', 
+      
       Icon: FaSyncAlt 
     },
     clean: { 
-      text: 'Arrumado', 
-      color: '#e6f7ff', 
-      borderColor: '#91d5ff', 
+       
+      color: '#ffffffff', 
+      
       Icon: FaCheckCircle 
     },
     blocked: { 
-      text: 'Bloqueado', 
-      color: '#f6f6f6', 
-      borderColor: '#d9d9d9', 
+      
+      color: '#ffffffff', 
+      
       Icon: FaLock 
     },
   };
@@ -51,7 +51,7 @@ function UnitCard({ unit }) {
   return (
     <div className="unit-card" style={cardStyle}>
       <div className="unit-card-icon">
-        <currentStatus.Icon size={24} color="#555" />
+        <currentStatus.Icon size={60} color="#555" />
       </div>
       {unit.status === 'dirty' && (
         <div className="unit-card-broom-icon">
