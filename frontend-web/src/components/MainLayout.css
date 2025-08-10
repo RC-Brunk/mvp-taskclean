@@ -1,0 +1,62 @@
+/* c:\taksclean-portfolio\frontend-web\src\components\MainLayout.css */
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.main-header {
+  background-color: #001529;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10; /* Garante que o header fique sobre qualquer conteúdo */
+}
+
+.header-title {
+  font-size: 24px;
+  margin: 0; /* Remove a margem padrão do h1 */
+}
+
+.main-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.logout-button {
+  background-color: transparent;
+  color: #ff4d4f;
+  border: 1px solid #ff4d4f;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  /* O padding foi removido daqui. Cada página agora gerencia seu próprio espaçamento. */
+}

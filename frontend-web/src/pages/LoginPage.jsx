@@ -1,18 +1,18 @@
 // frontend-web/src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './LoginPage.css'; 
 
-// Futuramente, moveremos a chamada da API para um arquivo de serviço
-import axios from 'axios';
+
 
 function LoginPage() {
-  // Hooks para guardar o estado dos inputs e para navegação
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Função que é chamada quando o formulário é enviado
+  
   const handleSubmit = async (event) => {
     event.preventDefault(); // Impede o recarregamento padrão da página
     setError(''); // Limpa erros anteriores
