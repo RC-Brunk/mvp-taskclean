@@ -17,7 +17,7 @@ function MainLayout() {
       <header className="main-header">
         <h1 className="header-title">Atlantico - Painel do Gerente</h1>
         <nav className="main-nav">
-          <Link to="/" className="nav-link">Dashboard</Link>
+          <Link to="/dashboard" className="nav-link">Dashboard</Link>
           <Link to="/units" className="nav-link">Unidades</Link>
           <Link to="/tasks" className="nav-link">Tarefas</Link>
           <button onClick={handleLogout} className="logout-button">Sair</button>

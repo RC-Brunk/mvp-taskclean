@@ -151,23 +151,6 @@ const calculatePercentage = (count) => {
       </div>
     )}
 
-    <div className="units-section">
-      <h3>Apartamentos</h3>
-      <div className="units-grid-container">
-        {units.map(unit => (
-          <div key={unit.id} onClick={() => handleUnitClick(unit)}>
-            <UnitCard unit={unit} />
-          </div>
-        ))}
-      </div>
-    </div>
-    
-    <TaskDetailModal 
-      unit={selectedUnit}
-      task={activeTask}
-      isLoading={isModalLoading}
-      onClose={() => setSelectedUnit(null)} 
-    />
   </div>
 );
 }

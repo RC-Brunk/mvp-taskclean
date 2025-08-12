@@ -26,7 +26,7 @@
 
 /* Define as cores com base no status usando data-attributes */
 .unit-card[data-status="clean"] {
-  --status-color: #07aa2b;
+  --status-color: #2807aa;
   --icon-color: #07aa2b;
 }
 .unit-card[data-status="dirty"] {

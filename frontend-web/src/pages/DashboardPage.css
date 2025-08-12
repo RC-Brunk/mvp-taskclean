@@ -1,4 +1,3 @@
-/* c:\taksclean-portfolio\frontend-web\src\pages\DashboardPage.css */
 * {
   box-sizing: border-box;
 }
@@ -19,7 +18,7 @@ body {
 }
 
 .page-title-section {
-  /* Adicionamos o espaçamento da página aqui, que antes estava no MainLayout */
+  
   padding: 20px 20px 15px;
   margin-bottom: 15px;
 }
@@ -35,9 +34,8 @@ body {
 
 .banner-hero {
   height: 350px;
-  /* Alterado de 100vw para 100% para evitar overflow horizontal */
+  
   width: 100%;
-  /* Removida a margem negativa que dependia do calc() e do padding do layout */
   margin: 0;
   background-size: cover;
   background-position: center;
@@ -140,28 +138,6 @@ body {
 
 .maintenance-alert {
   margin: 0 20px 20px;
-}
-
-.units-section {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin: 0 20px 20px;
-}
-
-.units-section h3 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 20px;
-}
-
-.units-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 15px;
-  max-width: 100%;
 }
 
 /* Responsividade */

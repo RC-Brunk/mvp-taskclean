@@ -1,9 +1,9 @@
-// frontend-web/src/App.jsx
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './components/MainLayout';
-import DashboardPage from './pages/DashboardPage'; // 1. Importe a nova página
+import DashboardPage from './pages/DashboardPage';
+import UnitsPage from './pages/UnitsPage'; // Importa a página de unidades
 
 function App() {
   return (
@@ -11,9 +11,10 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<DashboardPage />} /> {/* 2. Use o novo componente */}
-          <Route path="/units" element={<h1>Página para Gerenciar Unidades</h1>} />
-          <Route path="/tasks" element={<h1>Página para Gerenciar Tarefas</h1>} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/units" element={<UnitsPage />} /> {/* Usa o novo componente */}
+          <Route path="/tasks" element={<h1>Página de Tarefas (a ser criada)</h1>} />
         </Route>
       </Route>
     </Routes>

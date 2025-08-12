@@ -19,7 +19,7 @@ const statusIconMap = {
   in_progress: BiLoaderCircle,
 };
 
-function UnitCard({ unit }) {
+function UnitCard({ unit, onClick }) {
   // Seleciona os componentes de ícone com base no status da unidade
   const MainIcon = mainIconMap[unit.status];
   const StatusIcon = statusIconMap[unit.status];
@@ -32,7 +32,7 @@ function UnitCard({ unit }) {
   };
 
   return (
-    <div className="unit-card" data-status={unit.status}>
+    <div className="unit-card" data-status={unit.status} onClick={onClick}>
       {/* Renderiza o ícone de status (vassoura, etc.) se existir */}
       {StatusIcon && (
         <div className="unit-card-status-icon">

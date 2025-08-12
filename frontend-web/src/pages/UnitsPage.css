@@ -1,0 +1,16 @@
+.units-page-container {
+  padding: 25px;
+}
+
+.page-title {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.units-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
